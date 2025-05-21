@@ -17,10 +17,8 @@ class Solution {
         int[] nums={1,1,2,3,2,3,4};
       
         int newLength = sol.RemoveDuplicates(nums);
-
-        System.out.println("Array after removing duplicates:");
         for (int i = 0; i < newLength; i++) {
-            System.out.print(nums[i] + " ");
+            System.out.print(nums[i]);
         }
     }
 }
