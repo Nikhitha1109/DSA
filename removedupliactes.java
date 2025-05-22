@@ -1,9 +1,10 @@
-
+import java.util.Arrays;
 class Solution {
     public static int RemoveDuplicates(int[] nums){
         if(nums.length==0){
             return 0;
         }
+        Arrays.sort(nums);
         int i=0;
         for(int j=1;j<nums.length;j++){
             if(nums[j]!=nums[i]){
@@ -16,11 +17,9 @@ class Solution {
     public static void main(String args[]){
         int[] nums={1,1,2,3,2,3,4};
       
-        int newLength = sol.RemoveDuplicates(nums);
-
-        System.out.println("Array after removing duplicates:");
+        int newLength = Solution.RemoveDuplicates(nums);
         for (int i = 0; i < newLength; i++) {
-            System.out.print(nums[i] + " ");
+            System.out.print(nums[i]+" ");
         }
     }
 }
