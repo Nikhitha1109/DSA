@@ -1,16 +1,21 @@
 class Solution {
     public int longestPalindrome(String s) {
-        int oddCount = 0;
-        Map<Character, Integer> map = new HashMap<>();
-        for (char ch : s.toCharArray()) {
-            map.put(ch, map.getOrDefault(ch, 0) + 1);
-            if (map.get(ch) % 2 == 1)
-                oddCount++;
-            else
-                oddCount--;
+        if(s.length()==1)return 1;
+        int c=0;
+        int a[]=new int[128];
+        for(char ch:s.toCharArray()){
+            a[ch]++;
         }
-        if (oddCount > 1)
-            return s.length() - oddCount + 1;
-        return s.length();
+        boolean o=false;
+        for(int i:a){
+            if(i%2!=0){
+                c+=(i-1);
+                o=true;
+            }else{
+                c+=i;
+            }
+        }
+        if(o)return c+1;
+        return c;
     }
 }
