@@ -1,43 +1,48 @@
-import java.util.*;
-
 class Solution {
-    public int[][] sortMatrix(int[][] grid) {
-        int n = grid.length;
-
-        // Map from diagonal key (i-j) to list of elements
-        Map<Integer, List<Integer>> diagMap = new HashMap<>();
-
-        // Collect elements by diagonal key
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                int key = i - j;
-                diagMap.computeIfAbsent(key, k -> new ArrayList<>()).add(grid[i][j]);
-            }
+    public int[][] sortMatrix(int[][] mat) {
+        int rows = mat.length;
+        int cols = mat[0].length;
+        
+        for (int row = 0; row < rows; row++) {
+            sortDiagonal(mat, row, 0, false); // false for non-increasing
         }
 
-        // Sort each diagonal according to rules
-        for (int key : diagMap.keySet()) {
-            List<Integer> list = diagMap.get(key);
-            if (key >= 0) {
-                // bottom-left (including main diagonal) → descending
-                list.sort(Collections.reverseOrder());
-            } else {
-                // top-right → ascending
-                Collections.sort(list);
-            }
+        for (int col = 1; col < cols; col++) {
+            sortDiagonal(mat, 0, col, true); // true for non-decreasing
         }
 
-        // Place back values
-        Map<Integer, Integer> indexMap = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                int key = i - j;
-                int idx = indexMap.getOrDefault(key, 0);
-                grid[i][j] = diagMap.get(key).get(idx);
-                indexMap.put(key, idx + 1);
-            }
+        return mat;
+    }
+
+    private void sortDiagonal(int[][] mat, int row, int col, boolean increasing) {
+        int rows = mat.length;
+        int cols = mat[0].length;
+        
+        int len = Math.min(rows - row, cols - col);
+        int[] diagonal = new int[len];
+
+        for (int i = 0; i < len; i++) {
+            diagonal[i] = mat[row + i][col + i];
         }
 
-        return grid;
+        Arrays.sort(diagonal);
+
+        if (!increasing) {
+            reverse(diagonal);
+        }
+
+        for (int i = 0; i < len; i++) {
+            mat[row + i][col + i] = diagonal[i];
+        }
+    }
+    private void reverse(int[] arr) {
+        int i = 0, j = arr.length - 1;
+        while (i < j) {
+            int temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
+            i++;
+            j--;
+        }
     }
 }
