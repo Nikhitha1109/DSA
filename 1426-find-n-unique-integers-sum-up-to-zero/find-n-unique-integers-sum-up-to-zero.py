@@ -1,18 +1,13 @@
 class Solution(object):
     def sumZero(self, n):
-        """
-        :type n: int
-        :rtype: List[int]
-        """
-
         result=[]
-        for i in range(1,n//2+1):
-            result.append(i)
-            result.append(-i)
-
-        if n%2==1:
-            result.append(0)
+        if n%2==0:
+            for i in range(1,int(n/2)+1):
+                result+=[i,-i]
+        else:
+            result+=[0]
+            for i in range(1,int((n-1)/2)+1):
+                result+=[i,-i]
         return result
 
-        
         
