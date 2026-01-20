@@ -1,21 +1,18 @@
-public class Solution {
+class Solution {
     public int rob(int[] nums) {
-        int n = nums.length;
-        if (n == 0) return 0;
-        if (n == 1) return nums[0];
-        int money1 = robLinear(nums, 0, n - 2);
-        int money2 = robLinear(nums, 1, n - 1);
-
-        return Math.max(money1, money2);
-    }
-
-    private int robLinear(int[] nums, int start, int end) {
-        int prev1 = 0, prev2 = 0;
-        for (int i = start; i <= end; i++) {
-            int temp = Math.max(prev1, nums[i] + prev2);
-            prev2 = prev1;
-            prev1 = temp;
+        if(nums.length==1){
+            return nums[0];
         }
-        return prev1;
+        return Math.max(helper(0,nums,nums.length-2),helper(1,nums,nums.length-1));
+    }
+    public int helper(int start,int nums[],int end){
+        int rob1=0;
+        int rob2=0;
+        for(int i=start;i<=end;i++){
+            int temp=Math.max(rob1+nums[i],rob2);
+            rob1=rob2;
+            rob2=temp;
+        }
+        return rob2;
     }
 }
